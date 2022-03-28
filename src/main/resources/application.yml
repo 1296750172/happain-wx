@@ -5,3 +5,60 @@ server:
 spring:
   thymeleaf:
     cache: false
+
+  datasource:
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://182.254.147.195:3306/happain-wx?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: a12967501720.0
+
+#mybatis-plus 配置
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      #逻辑删除配置
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql
+    refresh: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+logging:
+  level:
+    org.springframework.web: INFO
+    com.github.binarywang.demo.wx.mp: DEBUG
+    me.chanjar.weixin: DEBUG
+
+#  config:
+#    classpath:logback-boot.xml
+
+wx:
+  mp:
+    useRedis: true
+    key: happain-wx
+    redisConfig:
+      host: 182.254.147.195
+      port: 6379
+      password: a12967501720.0
+      timeout: 1000
+    configs:
+      - appId: wx1a391482b93475e7 # 第一个公众号的appid
+        secret: 3de6cb65c88e6c2982fbf27bfd88ddd7 # 公众号的appsecret
+        token: xiaozeguai # 接口配置里的Token值
+        aesKey: qallswMD8eGbn7YfzXxiYZz6BKIDnMH1dpMQNgftJeF # 接口配置里的EncodingAESKey值
+#      - appId: 2222 # 第二个公众号的appid，以下同上
+#        secret: 1111
+#        token: 111
+#        aesKey: 111
+
+
+
+
