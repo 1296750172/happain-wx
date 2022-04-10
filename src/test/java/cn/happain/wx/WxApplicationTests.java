@@ -3,6 +3,8 @@ package cn.happain.wx;
 import cn.happain.wx.config.RedisConfig;
 import cn.happain.wx.config.WxMpProperties;
 import cn.happain.wx.mapper.UserMapper;
+import cn.happain.wx.pojo.Message;
+import cn.happain.wx.server.EventService;
 import cn.happain.wx.server.WechatService;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.service.WxService;
@@ -20,13 +22,12 @@ class WxApplicationTests {
 
     @Autowired
     private JedisPool jedisPool;
+    @Autowired
+    private EventService eventService;
     @Test
     void contextLoads() throws WxErrorException {
-        Jedis resource = jedisPool.getResource();
-        HashMap<String, String> map = new HashMap<>();
-        map.put("aaa","1");
-        Long demo = resource.hset("demo", map);
-        System.out.println(demo);
+        Message message = eventService.unsubscribe("o_WEi6eeBqUChERB8PHXHJhdFA1k");
+        System.out.println(message);
     }
 
 

@@ -1,5 +1,6 @@
 package cn.happain.wx.server;
 
+import cn.happain.wx.consts.WxConst;
 import cn.happain.wx.mapper.UserMapper;
 import cn.happain.wx.pojo.Message;
 import cn.happain.wx.pojo.bo.WxUserCheck;
@@ -16,6 +17,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -26,7 +28,7 @@ public class EventService {
     private JedisPool jedisPool;
 
     /*关注*/
-    public Message subscribe(WxMpUser wxUser) {
+    public Message subscribe(WxMpUser wxUser,String appid) {
         Message message1 = new Message();
         Date date = new Date();
         /*如果不为空*/
@@ -47,11 +49,12 @@ public class EventService {
         else {
             WxUser wxUser1 = new WxUser();
             wxUser1.setOpenId(wxUser.getOpenId());
-            wxUser1.setNickname(wxUser.getNickname());
+            wxUser1.setAppId(appid);
+            wxUser1.setNickname(wxUser.getOpenId());
             wxUser1.setSubscribe(true);
             wxUser1.setSubscribeTime(date);
-            user.setCreateTime(date);
-            user.setUpdateTime(date);
+            wxUser1.setCreateTime(date);
+            wxUser1.setUpdateTime(date);
             int insert = userMapper.insert(wxUser1);
             if (insert==-1) {
                 Message message = new Message();
@@ -84,7 +87,10 @@ public class EventService {
     public Message checkCode(String appid, String openid, String data) {
         Message message = new Message();
         Jedis jedis = jedisPool.getResource();
-
+        String key = appid + "@" + openid;
+        jedis.set(key,data);
+        jedis.expire(key, WxConst.SECOND);
+        message.success("ok");
         return message;
     }
 }

@@ -12,11 +12,6 @@ public class ImageTextBuild {
 
 
         WxMpXmlOutNewsMessage.Item item = new WxMpXmlOutNewsMessage.Item();
-        item.setDescription("description");
-        item.setPicUrl("http://e0a7-183-253-229-47.ngrok.io/image/fire.png");
-        item.setTitle("title");
-        item.setUrl("https://www.happain.cn");
-
         WxMpXmlOutNewsMessage m = WxMpXmlOutMessage.NEWS()
                 .fromUser(wxMessage.getToUser())
                 .toUser(wxMessage.getFromUser())

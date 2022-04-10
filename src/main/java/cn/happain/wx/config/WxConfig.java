@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.redis.JedisWxRedisOps;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,7 @@ public class WxConfig {
     private MenuHandler menuHandler;
     @Autowired
     private ViewHandler viewHandler;
-    @Autowired
-    private JedisPool jedisPool;
+
 
 
     @Bean

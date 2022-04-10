@@ -50,10 +50,10 @@ wx:
       password: a12967501720.0
       timeout: 1000
     configs:
-      - appId: wx1a391482b93475e7 # 第一个公众号的appid
-        secret: 3de6cb65c88e6c2982fbf27bfd88ddd7 # 公众号的appsecret
+      - appId: wxd1ec757fa230b79a # 第一个公众号的appid
+        secret: e75f6e754fb44ac4055dc7c9819bb72f # 公众号的appsecret
         token: xiaozeguai # 接口配置里的Token值
-        aesKey: qallswMD8eGbn7YfzXxiYZz6BKIDnMH1dpMQNgftJeF # 接口配置里的EncodingAESKey值
+        aesKey: yjKbhENXxxBwvAILgrfHO7oggdiqLxaOsgU2gcJoAsd # 接口配置里的EncodingAESKey值
 #      - appId: 2222 # 第二个公众号的appid，以下同上
 #        secret: 1111
 #        token: 111

@@ -7,6 +7,7 @@ import cn.happain.wx.pojo.WeChatException;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,8 +41,11 @@ public class WechatCheckInterceptor implements HandlerInterceptor {
         String timestamp = request.getParameter("timestamp");
         String nonce = request.getParameter("nonce");
         String echostr = request.getParameter("echostr");
+        String encrypt_type = request.getParameter("encrypt_type");
+
         String[] split = request.getServletPath().split("/");
         String index = split[split.length-1];
+        System.out.println(encrypt_type);
         System.out.println(index);
         System.out.println(signature);
         System.out.println(timestamp);
@@ -51,7 +55,7 @@ public class WechatCheckInterceptor implements HandlerInterceptor {
                 index,
                 signature,
                 timestamp, nonce, echostr);
-        /**/
+
         if (StringUtils.isAnyBlank(signature, timestamp, nonce)) {
             response.setStatus(500);
             response.setCharacterEncoding("UTF-8");

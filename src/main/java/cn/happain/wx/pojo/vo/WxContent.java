@@ -14,17 +14,14 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WxUser {
+public class WxContent {
 
     @TableId
     private Long id;
-    private String appId;
-    private String openId;
-    private Boolean subscribe;
-    private String nickname;
-    private Date subscribeTime;
+
+    private String content;
+    private String type;
+
     @TableField(fill= FieldFill.INSERT)
     private Date createTime;
-    @TableField(fill= FieldFill.UPDATE)
-    private Date updateTime;
 }
