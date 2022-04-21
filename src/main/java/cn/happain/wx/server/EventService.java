@@ -5,20 +5,17 @@ import cn.happain.wx.mapper.UserMapper;
 import cn.happain.wx.pojo.Message;
 import cn.happain.wx.pojo.bo.WxUserCheck;
 import cn.happain.wx.pojo.vo.WxUser;
+import cn.happain.wx.utils.CodeUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
-import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class EventService {
@@ -84,13 +81,17 @@ public class EventService {
     }
 
     /*验证码事件*/
-    public Message checkCode(String appid, String openid, String data) {
+    public Message checkCode(String appid, String openid, WxUserCheck wxUserCheck) {
         Message message = new Message();
+        /*验证码*/
+        String code = CodeUtil.getCode();
+        wxUserCheck.setCode(code);
         Jedis jedis = jedisPool.getResource();
-        String key = appid + "@" + openid;
-        jedis.set(key,data);
+        String key = appid + "@" + code;
+        jedis.set(key, JSONUtil.parseObj(wxUserCheck).toStringPretty());
         jedis.expire(key, WxConst.SECOND);
         message.success("ok");
+        message.setMessage(code);
         return message;
     }
 }

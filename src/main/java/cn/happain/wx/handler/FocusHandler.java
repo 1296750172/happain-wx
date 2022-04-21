@@ -1,31 +1,24 @@
 package cn.happain.wx.handler;
 
 import cn.happain.wx.builder.ImageBuilder;
-import cn.happain.wx.builder.ImageTextBuild;
 import cn.happain.wx.builder.MsgCustomBuilder;
-import cn.happain.wx.builder.TextBuilder;
 import cn.happain.wx.mapper.UserMapper;
 import cn.happain.wx.mapper.WxContentMapper;
 import cn.happain.wx.pojo.Message;
 import cn.happain.wx.pojo.vo.WxContent;
-import cn.happain.wx.pojo.vo.WxUser;
 import cn.happain.wx.server.EventService;
-import cn.happain.wx.server.WechatService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
-import me.chanjar.weixin.common.util.crypto.WxCryptUtil;
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
-import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTextMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.Map;
 
 
