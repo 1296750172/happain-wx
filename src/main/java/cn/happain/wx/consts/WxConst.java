@@ -12,5 +12,5 @@ public class WxConst {
     /*微信默认回复*/
     public static String DEFAULT_MSG = "你好";
     /*验证码的时间*/
-    public static Integer SECOND = 60;
+    public static Integer SECOND = 120;
 }
