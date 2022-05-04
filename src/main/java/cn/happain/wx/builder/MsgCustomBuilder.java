@@ -2,12 +2,9 @@ package cn.happain.wx.builder;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
-import cn.hutool.json.JSONObject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
-import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
-import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTextMessage;
 
 /*主动发消息的构造模板*/
 public class MsgCustomBuilder {
@@ -31,10 +28,8 @@ public class MsgCustomBuilder {
     /*文本构造*/
     public static String textBuild(String content, WxMpXmlMessage wxMessage,WxMpService services) throws WxErrorException {
         String accessToken = services.getAccessToken();
-        System.out.println(accessToken);
         String format = StrUtil.format(textJosn, wxMessage.getFromUser(), content);
         String result = HttpUtil.post("https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + accessToken, format);
-
         return result;
     }
 

@@ -13,4 +13,6 @@ public class WxConst {
     public static String DEFAULT_MSG = "你好";
     /*验证码的时间*/
     public static Integer SECOND = 120;
+    /*请求url*/
+    public static String YOUYOU_URL = "http://182.254.147.195:9000/";
 }

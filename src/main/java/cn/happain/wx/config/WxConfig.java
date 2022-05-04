@@ -2,21 +2,14 @@ package cn.happain.wx.config;
 
 import cn.happain.wx.handler.*;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.redis.JedisWxRedisOps;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
-import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
-import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,7 +65,6 @@ public class WxConfig {
     /*消息路由*/
     @Bean
     public WxMpMessageRouter wxMpMessageRouter(WxMpService wxMpService) {
-
         WxMpMessageRouter newRouter = new WxMpMessageRouter(wxMpService);
         // 记录所有事件的日志 （异步执行）
         newRouter.rule().handler(logHandler).next();

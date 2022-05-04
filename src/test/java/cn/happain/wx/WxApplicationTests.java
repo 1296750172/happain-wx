@@ -26,8 +26,6 @@ class WxApplicationTests {
     private EventService eventService;
     @Test
     void contextLoads() throws WxErrorException {
-        Message message = eventService.unsubscribe("o_WEi6eeBqUChERB8PHXHJhdFA1k");
-        System.out.println(message);
     }
 
 

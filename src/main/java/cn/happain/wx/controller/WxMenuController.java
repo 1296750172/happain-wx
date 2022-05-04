@@ -1,8 +1,6 @@
 package cn.happain.wx.controller;
 
 import cn.happain.wx.config.WxMpProperties;
-import lombok.AllArgsConstructor;
-import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -11,20 +9,14 @@ import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.zip.ZipEntry;
 
 import static me.chanjar.weixin.common.api.WxConsts.MenuButtonType;
 
 /**
  * @author Binary Wang(https://github.com/binarywang)
  */
-@AllArgsConstructor
 @RestController
 @RequestMapping("/wx/menu")
 public class WxMenuController {
@@ -50,57 +42,74 @@ public class WxMenuController {
 
     @GetMapping("/create/{index}")
     public String menuCreateSample(@PathVariable String index) throws WxErrorException, MalformedURLException {
-        /*获取appid*/
-        String appid = wxMpProperties.getConfigs().get(Integer.parseInt(index)).getAppId();
-        /*创建菜单*/
-        WxMenu menu = new WxMenu();
-        /*用户按钮  给微信二维码*/
-        WxMenuButton main = new WxMenuButton();
-        main.setName("咨询合作");
+        if(index.equals("0")) {
+            /*获取appid*/
+            String appid = wxMpProperties.getConfigs().get(Integer.parseInt(index)).getAppId();
+            /*创建菜单*/
+            WxMenu menu = new WxMenu();
+            /*用户按钮  给微信二维码*/
+            WxMenuButton main = new WxMenuButton();
+            main.setName("咨询合作");
+            /*登陆业务*/
+            WxMenuButton login = new WxMenuButton();
+            login.setName("验证码");
+            login.setKey("LOGIN");
+            login.setType(MenuButtonType.CLICK);
+            /*关于我们*/
+            WxMenuButton about = new WxMenuButton();
+            about.setName("关于我们");
+            about.setKey("ABOUT");
+            about.setType(MenuButtonType.CLICK);
 
 
-
-        /*登陆业务*/
-        WxMenuButton login = new WxMenuButton();
-        login.setName("验证码");
-        login.setKey("LOGIN");
-        login.setType(MenuButtonType.CLICK);
-        /*关于我们*/
-        WxMenuButton about = new WxMenuButton();
-        about.setName("关于我们");
-        about.setKey("ABOUT");
-        about.setType(MenuButtonType.CLICK);
+            menu.getButtons().add(login);
+            menu.getButtons().add(main);
+            menu.getButtons().add(about);
 
 
-        menu.getButtons().add(login);
-        menu.getButtons().add(main);
-        menu.getButtons().add(about);
+            /*毕设业务*/
+            WxMenuButton web = new WxMenuButton();
+            web.setType(MenuButtonType.VIEW);
+            web.setName("毕设服务");
+            web.setKey("BISHE");
+            web.setUrl("https://www.happain.cn");
 
 
-        /*毕设业务*/
-        WxMenuButton web = new WxMenuButton();
-        web.setType(MenuButtonType.VIEW);
-        web.setName("毕设服务");
-        web.setKey("BISHE");
-        web.setUrl("https://www.happain.cn");
+            /*作者信息*/
+            WxMenuButton user = new WxMenuButton();
+            user.setType(MenuButtonType.CLICK);
+            user.setName("联系作者");
+            user.setKey("USER");
+            main.getSubButtons().add(web);
+            main.getSubButtons().add(user);
+            this.wxService.switchover(appid);
+            return this.wxService.getMenuService().menuCreate(menu);
+        }
+        if(index.equals("1")) {
+            System.out.println("111111111");
+            /*获取appid*/
+            String appid = wxMpProperties.getConfigs().get(Integer.parseInt(index)).getAppId();
+            /*创建菜单*/
+            WxMenu menu = new WxMenu();
+            /*网站*/
+            WxMenuButton web = new WxMenuButton();
+            web.setType(MenuButtonType.VIEW);
+            web.setName("福利网站");
+            web.setKey("FULIWEB");
+            web.setUrl("https://www.happain.cn");
+            /*登陆业务*/
+            WxMenuButton work = new WxMenuButton();
+            work.setName("功能介绍");
+            work.setKey("WORK");
+            work.setType(MenuButtonType.CLICK);
+            /*关于我们*/
 
-
-
-
-        /*作者信息*/
-        WxMenuButton user = new WxMenuButton();
-        user.setType(MenuButtonType.CLICK);
-        user.setName("联系作者");
-        user.setKey("USER");
-
-
-        main.getSubButtons().add(web);
-        main.getSubButtons().add(user);
-
-
-
-
-        return this.wxService.getMenuService().menuCreate(menu);
+            menu.getButtons().add(web);
+            menu.getButtons().add(work);
+            this.wxService.switchover(appid);
+            return this.wxService.getMenuService().menuCreate(menu);
+        }
+        return "error";
     }
 
     /**
